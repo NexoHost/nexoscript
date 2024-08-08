@@ -2,7 +2,7 @@
 rm -rf /home/container/tmp/*
 echo "⚙️ Versión del Script: 1.9"
 echo "🛠 Iniciando PHP-FPM..."
-/usr/sbin/php8.1-fpm --fpm-config /home/container/php-fpm/php-fpm.conf --daemonize
+/usr/sbin/php8.3-fpm --fpm-config /home/container/php-fpm/php-fpm.conf --daemonize
 
 echo "🛠 Iniciando Nginx..."
 echo "✅ Inicializado con éxito"
