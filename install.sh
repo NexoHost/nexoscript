@@ -4,28 +4,28 @@ if [[ -f "./logs/instalado" ]]; then
         php ./nextcloud/occ ${COMMANDO_OCC}
         exit
     else
-        echo "✓ Atualizando o script install.sh"
-        curl -sSL https://raw.githubusercontent.com/NexoHost/nexoscript/main/install.sh -o install.sh;
+        echo "✓ Actualizando el script install.sh"
+        curl -sSL https://raw.githubusercontent.com/NexoHost/nexoscript/main/install.sh -o install.sh
         chmod a+x ./install.sh
-        echo "✓ Atualizando o script start.sh"
-        curl -sSL https://raw.githubusercontent.com/NexoHost/nexoscript/main/start.sh -o start.sh;
-        chmod a+x ./start.sh;
-        ./start.sh;
+        echo "✓ Actualizando el script start.sh"
+        curl -sSL https://raw.githubusercontent.com/NexoHost/nexoscript/main/start.sh -o start.sh
+        chmod a+x ./start.sh
+        ./start.sh
     fi
 else
     cd /mnt/server/
     mkdir php-fpm
 
-    echo "**** Fazendo o download do nextcloud ****"
+    echo "**** Descargando Nextcloud ****"
     rm -rf nextcloud/
-    if [ "${NEXTCLOUD_RELEASE}" == "latest" ] ; then
+    if [ "${NEXTCLOUD_RELEASE}" == "latest" ]; then
         DOWNLOAD_LINK=$(echo -e "${NEXTCLOUD_RELEASE}.zip")
     else
         DOWNLOAD_LINK=$(echo -e "nextcloud-${NEXTCLOUD_RELEASE}.zip")
     fi
 fi
 
-echo "✓ Atualizando o script install.sh"
+echo "✓ Actualizando el script install.sh"
 curl -sSL https://raw.githubusercontent.com/NexoHost/nexoscript/main/install.sh -o install.sh
 
 git clone https://github.com/finnie2006/ptero-nginx ./temp
@@ -34,7 +34,7 @@ cp -r ./temp/php-fpm /mnt/server/
 rm -rf ./temp
 rm -rf /mnt/server/webroot/*
 if [ -d logs ]; then
-    echo "Pasta Logs já existe, pulando..."
+    echo "La carpeta de logs ya existe, se omite..."
 else
     mkdir logs
 fi
@@ -43,9 +43,9 @@ cd nginx/conf.d/
 wget https://raw.githubusercontent.com/Ashu11-A/Ashu_eggs/main/Connect/pt-BR/Nextcloud/default.conf
 cd /mnt/server
 cat <<EOF > ./logs/install_log.txt
-Versão: $NEXTCLOUD_RELEASE
-Link: https://download.nextcloud.com/server/releases/${DOWNLOAD_LINK}
-Arquivo: ${DOWNLOAD_LINK}
+Versión: $NEXTCLOUD_RELEASE
+Enlace: https://download.nextcloud.com/server/releases/${DOWNLOAD_LINK}
+Archivo: ${DOWNLOAD_LINK}
 EOF
 
 wget https://download.nextcloud.com/server/releases/${DOWNLOAD_LINK}
@@ -53,10 +53,10 @@ unzip ${DOWNLOAD_LINK}
 rm -rf ${DOWNLOAD_LINK}
 
 chown -R nginx:nginx nextcloud && chmod -R 755 nextcloud
-echo "**** Limpando ****"
+echo "**** Limpiando ****"
 rm -rf /tmp/*
-echo "**** configure php and nginx for nextcloud ****" && \
-echo "extension="smbclient.so"" > php-fpm/conf.d/00_smbclient.ini && \
+echo "**** Configurando PHP y Nginx para Nextcloud ****" && \
+echo "extension=\"smbclient.so\"" > php-fpm/conf.d/00_smbclient.ini && \
 echo 'apc.enable_cli=1' >> php-fpm/conf.d/apcu.ini && \
 sed -i \
 -e 's/;opcache.enable.*=.*/opcache.enable=1/g' \
